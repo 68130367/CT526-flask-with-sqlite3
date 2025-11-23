@@ -1,5 +1,3 @@
-# สร้าง folder flask_layout_guide
-
 # สร้างโฟลเดอร์ venv สำหรับเก็บสภาพแวดล้อมจำลอง โดยใช้ extension Python Environments ในการสร้าง
 
 # ติดตั้ง Flask โดยใช้คำสั่ง pip install Flask
