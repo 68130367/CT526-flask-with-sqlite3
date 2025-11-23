@@ -1,20 +1,42 @@
 from flask import Flask, render_template
 from flask_cors import CORS
+import sqlite3
 
 app = Flask(__name__)
 
 CORS(app)
 
+DB_NAME = "ct526.db"
+
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    return conn
+
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
-
-@app.route("/myid")
-def my_id():
     student_id = "68130367"
-    return render_template("myid.html", student_id=student_id)
+    return render_template("index.html", student_id=student_id)
+
+
+@app.route("/movie")
+def movie():
+    movies = []
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.execute("SELECT * FROM movies ORDER BY mid ASC")
+        movies = cursor.fetchall()
+    except sqlite3.Error as e:
+        print(f"Database Error: {e}")
+    return render_template("movie.html", movies=movies)
+
+
+@app.route("/travel")
+def travel():
+    return render_template("travel.html")
 
 
 @app.route("/tech")
